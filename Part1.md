@@ -59,8 +59,8 @@ app.service('myService', ['$http',function($http){
 controller.js
 ```js
 app.controller('myController', ['$scope','myService',function($scope, myService) {
-$scope.data = myService.getData()
-console.log($scope.data)
+  $scope.data = myService.getData()
+  console.log($scope.data)
 }])
 ```
 
