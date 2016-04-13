@@ -56,7 +56,7 @@ app.service('myService', ['$http',function($http){
     }
 })
 ```
-controller.js
+controller.js (remember to include this file in a script tag in main.html)
 ```js
 app.controller('myController', ['$scope','myService',function($scope, myService) {
   $scope.data = myService.getData()
