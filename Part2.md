@@ -39,9 +39,8 @@ Now we have declared two directives, one called myDirective, the other called my
 
 ## Defining routes
 
-You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive to the template property. So instead of passing an HTML file path we pass the actual element. We also remove the controller property because we will add a controller property to our directive.
+You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive to the template property. So instead of passing an HTML file path we pass the actual element. We also remove the controller property because we will add a controller property to the DDO.
 
-routes.js (remember to include this file in a script tag in main.html)
 ```js
 app.config(['$routeProvider',
   function($routeProvider) {
