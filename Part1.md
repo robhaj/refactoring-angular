@@ -49,10 +49,13 @@ app.config(['$routeProvider',
 ```
 service.js (remember to include this file in a script tag in main.html)
 ```js
-app.service('myService', ['$http',function($http){
+app.service('myService', [function(){
   return {
     getData: function() {
-      return $http.get('/data')
+      return {
+        "name":"Robby",
+        "age":"26"
+      }
     }
 })
 ```
@@ -64,6 +67,13 @@ app.controller('myController', ['$scope','myService',function($scope, myService)
 }])
 ```
 
+So now that we have our basic boilerplate set up, let's talk about it. We've got our app.js file that just instantiates a new angular module called myApp. We then setup our HTML template and make sure to include ng-app='myApp' in the HTML tag. Also, include angular, angular route, and our app.js in a script tag.
+
+Next we created a routes.js file where we will setup the $routeProvider.
+
+Then comes our service which I've called myService. We've attached a method called getData, and all that does is return an object for us to use.
+
+Lastly we setup a global controller called myController. We have to inject our service to be able to call the getData method. We also inject $scope to talk to our view.
 
 
 # Global Controllers vs Isolated Controllers
