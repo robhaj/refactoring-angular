@@ -9,8 +9,13 @@ Since Angular 1.3, controllers in the global scope are no longer 'supported'. We
 
 We can remove our controllers by using directives everywhere you’d use a controller. That means your app’s code is now either in a directive or in a factory/service.
 
-You’ve heard the mantra “Don’t do DOM manipulation in controllers” a thousand times. But this isn’t a controller anymore. It’s a component.
+You’ve probably been told not to do DOM manipulation in the controller many times. However, this isn’t a controller anymore. It’s a *component*.
 
 Isolated directives are self-contained components that are easy to maintain.
 
-Defining routes: You no longer need to supply a controller in your ui-router or ng-route configuration. Just pass a simple template such as <messages></messages>.
+## Defining routes
+
+You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive
+```html
+<my-directive></my-directive>.
+```
