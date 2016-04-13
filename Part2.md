@@ -15,7 +15,8 @@ Isolated directives are self-contained components that are easy to maintain.
 
 ## Defining routes
 
-You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive
+You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive to the template property.
+
 ```html
 <my-directive></my-directive>.
 ```
