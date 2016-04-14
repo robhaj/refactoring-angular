@@ -62,11 +62,12 @@ app.config(['$routeProvider',
 services.js
 ```js
 app.service('myService', [function(){
+
   return {
     getData: function() {
       return {
         "name":"Robby",
-        "age": 24
+        "age": "24"
       }
     },
     birthday: function(person) {

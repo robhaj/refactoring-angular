@@ -11,7 +11,7 @@ app.js
 ```js
 var app = angular.module('myApp', ['ngRoute'])
 ```
-main.html
+index.html
 ```html
 <!DOCTYPE html>
 <html lang='en' ng-app='myApp'>
@@ -28,9 +28,13 @@ main.html
   </body>
 </html>
 ```
-index.html
+main.html
 ```html
-<div> Testing the Router </div>
+<div ng-repeat='person in data'>
+  Name: {{person.name}} |
+  Age: {{person.age}}
+  <br>
+</div>
 ```
 routes.js (remember to include this file in a script tag in main.html)
 ```js
@@ -38,7 +42,7 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'index.html',
+        templateUrl: 'main.html',
         controller: 'myController'
       }).
       otherwise({
@@ -49,14 +53,21 @@ app.config(['$routeProvider',
 ```
 service.js (remember to include this file in a script tag in main.html)
 ```js
-app.service('myService', [function(){
+app.service('myService', function(){
   return {
     getData: function() {
-      return {
+      return [{
         "name":"Robby",
         "age":"24"
-      }
+      },
+      { "name":"Michael",
+        "age":"33"
+      },
+      { "name":"Little Jimmy",
+        "age":"12"
+      }]
     }
+  }
 })
 ```
 controller.js (remember to include this file in a script tag in main.html)

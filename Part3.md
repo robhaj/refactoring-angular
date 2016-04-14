@@ -20,6 +20,15 @@ Components take two arguments
 - The Component Config Object(CCO) (as apposed to Directive Definition Object(DDO)).
   - unlike .directive(), this method does not take a factory function.
 
+```js
+app.component('heroDetail', {
+  templateUrl: 'heroDetail.html',
+  controller: HeroDetailController,
+  bindings: {
+    hero: '='
+  }
+});
+```
 ## Removing the Scope object
 
 Don't panic...we will still have the concept of scope. It'll just bind to the directive. Having different kinds of scope, like isolated and non-isolated, can easily lead to issues. It's best to keep things focused on isolated scopes.
