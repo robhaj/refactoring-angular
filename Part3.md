@@ -2,6 +2,24 @@
 
 Using Angular 1.5.3 refactor into a component. Use the component router. Make sure to talk about push state. (You have to use it with the component router.) Make sure to turn HTML5 mode on. All a component is is a directive with isolated scope.
 
+## Components!
+Advantages:
+- simpler configuration than plain directives
+- promote sane defaults and best practices
+- optimized for component-based architecture
+- writing component directives will make it easier to upgrade to Angular 2
+
+When not to use Components:
+
+- directives that rely on DOM manipulation like adding event listeners (compile and link functions are unavailable)
+- advanced directive definition options (priority, terminal, multi-element)
+- when you need a directive triggered by an attribute or CSS class, rather than an element
+
+Components take two arguments
+- The name of the Component as a string.
+- The Component Config Object(CCO) (as apposed to Directive Definition Object(DDO)).
+  - unlike .directive(), this method does not take a factory function.
+
 ## Removing the Scope object
 
 Don't panic...we will still have the concept of scope. It'll just bind to the directive. Having different kinds of scope, like isolated and non-isolated, can easily lead to issues. It's best to keep things focused on isolated scopes.
@@ -66,3 +84,18 @@ The template didn’t need any changes. Same for the controller function itself.
 ## Link function vs Controller function
 
 You might still need link functions because the controller function executes before the element renders. If you want to register an event handler on a child element then you’ll have to do it in the link function. Another is when you want to use require and get access to that controller.
+
+## Component Router
+
+In AngularJS 1.5, the Component Router was introduced. Each Component in the application can have a Router associated with it. It is recommended to develop AngularJS applications as a hierarchy of Components. Each Component is an isolated part of the application, which is responsible for its own user interface. In Angular, a Component is a special kind of directive that uses a simpler configuration which is suitable for a component-based application structure.
+
+This makes it easier to write an app in a way that's similar to using Web Components or using Angular 2's style of application architecture.
+
+
+```js
+angular.module('heroApp', []).controller('mainCtrl', function() {
+  this.hero = {
+    name: 'Spawn'
+  };
+});
+```

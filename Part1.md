@@ -3,7 +3,7 @@
 Show a regular angular app with a:
 - global controller
 - ngRoute module
-- factory/service
+- service
 - ng-repeat directive to loop through an array of objects and add it to the DOM
 
 # Code
@@ -54,7 +54,7 @@ app.service('myService', [function(){
     getData: function() {
       return {
         "name":"Robby",
-        "age":"26"
+        "age":"24"
       }
     }
 })

@@ -1,6 +1,6 @@
 #Part 2
 
-Refactor into two custom Directives, removing the global Controller. Keep ngRoute and the Factory. Make sure to use isolate scope. Talk about why this is better code.
+Refactor into two custom Directives, removing the global Controller. Keep ngRoute and the Service. Make sure to use isolate scope. Talk about why this is better code.
 
 
 # Design Pattern Notes
@@ -21,26 +21,29 @@ directives.js
 ```js
 app.directive('myDirective', function() {
   return {
-    restrict: 'E',
-    templateUrl: 'myDirective.html'
+    restrict: 'EA',
+    templateUrl: 'myDirective.html',
+    scope: {}
   }
 })
 
 app.directive('myOtherDirective', function() {
   return {
     restrict: 'EA',
-    templateUrl: 'myOtherDirective.html'
+    templateUrl: 'myOtherDirective.html',
+    scope: {}
   }
 })
 ```
 
-Now we have declared two directives, one called myDirective, the other called myOtherDirective. We return a Directive Definition Object, or a DDO, from the callback function passed two the directive method. We've added the restrict property which 'restricts' the directive to an element or an attribute. We also add a templateUrl property which is a path to an html file for the directive. This is better than using the template property and stuffing a bunch of HTML in the directives.js file.
+Now we have declared two directives, one called myDirective, the other called myOtherDirective. We return a Directive Definition Object, or a DDO, from the callback function passed two the directive method. We've added the restrict property which 'restricts' the directive to an element or an attribute. We also add a templateUrl property which is a path to an html file for the directive. We set scope to an empty object to create an isolated scope.
 
 
 ## Defining routes
 
-You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive to the template property. So instead of passing an HTML file path we pass the actual element. We also remove the controller property because we will add a controller property to the DDO.
+You no longer have to specify a controller in the ui-router or ng-route configuration. Just pass a template of the directive to the template property. So instead of passing an HTML file path we pass the actual element. We also remove the controller property because next we will add a controller property to the DDO.
 
+routes.js
 ```js
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -55,5 +58,44 @@ app.config(['$routeProvider',
         redirectTo: '/'
       });
   }]);
+```
+services.js
+```js
+app.service('myService', [function(){
+  return {
+    getData: function() {
+      return {
+        "name":"Robby",
+        "age": 24
+      }
+    },
+    birthday: function(person) {
+      person.age++
+      return person
+    }
+})
+```
+directives.js
+```js
+app.directive('myDirective', ['$scope','myService',function($scope,myService) {
+  return {
+    restrict: 'EA',
+    templateUrl: 'myDirective.html',
+    scope: {},
+    controller: function($scope, myService) {
+      $scope.data = myService.getData()
+    }
+  }
+}])
 
+app.directive('myOtherDirective', function() {
+  return {
+    restrict: 'EA',
+    templateUrl: 'myOtherDirective.html',
+    scope: {},
+    controller: function($scope, myService) {
+      $scope.otherData = myService.birthday(person)
+    }
+  }
+})
 ```
