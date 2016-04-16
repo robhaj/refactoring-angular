@@ -19,31 +19,33 @@ We can keep our boilerplate from Part1. We'll delete the controller.js to get ri
 Next, we'll add a
 directives.js
 ```js
-app.directive('myDirective', function() {
+app.directive('myDirective', function () {
   return {
     restrict: 'EA',
-    templateUrl: 'myDirective.html',
-    scope: {}
-  }
-})
+    scope: {},
+    controller: function () {
+      this.name = 'Pascal';
+    },
+    controllerAs: 'ctrl1',
+    bindToController: true,
+    template: '<div>{{ctrl1.name}}</div>'
+  };
+});
 
-app.directive('myOtherDirective', function() {
+app.directive('myOtherDirective', function () {
   return {
     restrict: 'EA',
-    templateUrl: 'myOtherDirective.html',
-    scope: {}
-  }
-})
+    scope: {},
+    controller: function () {
+      this.name = 'Cartier';
+    },
+    controllerAs: 'ctrl2',
+    bindToController: true,
+    template: '<div>{{ctrl2.name}}</div>'
+  };
+});
 ```
-myDirective.html
-```html
-<div>My directive!</div>
-```
-myOtherDirective.html
-```html
-<div>My other directive!</div>
-```
-Now we have declared two directives, one called myDirective, the other called myOtherDirective. We return a Directive Definition Object, or a DDO, from the callback function passed two the directive method. We've added the restrict property and set it to 'EA' which restricts the directive to an element or an attribute. We also add a templateUrl property which is a path to the html file for the directive. We set scope to an empty object to create an isolated scope.
+Now we have declared two directives, one called myDirective, the other called myOtherDirective. We return a Directive Definition Object, or a DDO, from the callback function passed two the directive method. We've added the restrict property and set it to 'EA' which restricts the directive to an element or an attribute. We set scope to an empty object to create an isolated scope.
 
 
 ## Defining routes
@@ -69,3 +71,30 @@ app.config(['$routeProvider',
 
 Now, at the root url, you should see "My directive".
 When you browse to /other you should see "My other directive!"
+
+## Bind to controller
+Angular 1.3 introduces a new property to the directive definition object called bindToController, which does exactly what it says. When set to true in a directive with isolated scope that uses controllerAs, the component’s properties are bound to the controller rather than to the scope.
+That means, Angular makes sure that, when the controller is instantiated, the initial values of the isolated scope bindings are available on this, and future changes are also automatically available.
+Let’s apply bindToController to our directive and see how the code becomes cleaner.
+
+Improvements in 1.4
+In version 1.4, bindToController gets even more powerful. When having an isolated scope with properties to be bound to a controller, we always define those properties on the scope definition and bindToController is set to true. In 1.4 however, we can move all our property binding definitions to bindToController and make it an object literal.
+Here’s an example with a component directive that uses bindToController. Instead of defining the scope properties on scope, we declaratively define what properties are bound to the component’s controller:
+
+```js
+app.directive('someDirective', function () {
+  return {
+    scope: {},
+    bindToController: {
+      someObject: '=',
+      someString: '@',
+      someExpr: '&'
+    }
+    controller: function () {
+      this.name = 'Pascal';
+    },
+    controllerAs: 'ctrl',
+    template: '<div>{{ctrl.name}}</div>'
+  };
+});
+```

@@ -100,7 +100,16 @@ In AngularJS 1.5, the Component Router was introduced. Each Component in the app
 
 This makes it easier to write an app in a way that's similar to using Web Components or using Angular 2's style of application architecture.
 
+```js
+angular.module('app', ['ngNewRouter'])
+  .controller('AppController', ['$router', AppController]);
 
+AppController.$routeConfig = [
+  { path: '/',           component: 'home' },
+  { path: '/detail/:id', component: 'detail' }
+];
+function AppController ($router) {}
+```
 ```js
 angular.module('heroApp', []).controller('mainCtrl', function() {
   this.hero = {
