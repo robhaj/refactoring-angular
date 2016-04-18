@@ -19,29 +19,29 @@ We can keep our boilerplate from Part1. We'll delete the controller.js to get ri
 Next, we'll add a
 directives.js
 ```js
-app.directive('myDirective', function () {
+app.directive('myDirective', function (myService) {
   return {
     restrict: 'EA',
     scope: {},
-    controller: function () {
-      this.name = 'Pascal';
+    controller: function (myService) {
+      this.people = 'people'
     },
     controllerAs: 'ctrl1',
     bindToController: true,
-    template: '<div>{{ctrl1.name}}</div>'
+    template: '<div> {{people}} </div>'
   };
 });
 
-app.directive('myOtherDirective', function () {
+app.directive('myOtherDirective', function (myService) {
   return {
     restrict: 'EA',
     scope: {},
-    controller: function () {
-      this.name = 'Cartier';
+    controller: function (myService) {
+      this.people = myService.getData()
     },
     controllerAs: 'ctrl2',
     bindToController: true,
-    template: '<div>{{ctrl2.name}}</div>'
+    template: '<div ng-repeat="person in people">{{person.name}}</div>'
   };
 });
 ```
@@ -80,21 +80,3 @@ Let’s apply bindToController to our directive and see how the code becomes cle
 Improvements in 1.4
 In version 1.4, bindToController gets even more powerful. When having an isolated scope with properties to be bound to a controller, we always define those properties on the scope definition and bindToController is set to true. In 1.4 however, we can move all our property binding definitions to bindToController and make it an object literal.
 Here’s an example with a component directive that uses bindToController. Instead of defining the scope properties on scope, we declaratively define what properties are bound to the component’s controller:
-
-```js
-app.directive('someDirective', function () {
-  return {
-    scope: {},
-    bindToController: {
-      someObject: '=',
-      someString: '@',
-      someExpr: '&'
-    }
-    controller: function () {
-      this.name = 'Pascal';
-    },
-    controllerAs: 'ctrl',
-    template: '<div>{{ctrl.name}}</div>'
-  };
-});
-```
