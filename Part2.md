@@ -60,9 +60,9 @@ app.config(['$routeProvider',
       when('/', {
         template: '<my-directive></my-directive>'
       }).
-      when('/', {
+      when('/other', {
         template: '<my-other-directive></my-other-directive>'
-      })
+      }).
       otherwise({
         redirectTo: '/'
       });
